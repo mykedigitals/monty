@@ -2,11 +2,11 @@
 
 
 /**
- * self_push - Q0a opcode that pushes an element to the stack
- * @list_head: head of linked list stack
- * @lineNumber: track of the current position of input being read
+ * self_push - Q0a opcode that will push an element to the stack
+ * @list_head: head of the linked list stack
+ * @lineNumber: the track of current position of input being read
  *
- * Return: nil
+ * Return: Nill
  */
 void self_push(stack_t **list_head, unsigned int lineNumber)
 {
