@@ -53,10 +53,10 @@ void self_push(stack_t **list_head, unsigned int lineNumber)
 
 
 /**
- * pall_self - Q0b opcode that prints all the values on the stack,
- * starting from the top of the stack
- * @list_head: head of linked list stack
- * @lineNumber: track of the current position of input being read
+ * pall_self - Q0b opcode that will print all the values on the stack,
+ * beggining from top of the stack
+ * @list_head: head of our linked list stack
+ * @lineNumber: track of current position of input to be read
  *
  * Return: nil
  */
@@ -64,33 +64,33 @@ void pall_self(stack_t **list_head, unsigned int lineNumber)
 {
 	stack_t *head;
 
-	/* The lineNumber parameter is not used in this function,*/
-	/* so the (void) cast is used to suppress compiler warnings*/
+	/* The lineNumber parameter isn't used in this function,*/
+	/* so the (void) cast is used for suppressing compiler warnings*/
 	/* about an unused variable*/
 	(void)lineNumber;
 
-	/* Set the head pointer to the current stack head*/
+	/* make the head pointer to the current stack head*/
 	head = *list_head;
 
-	/* If the stack is empty return without printing anything*/
+	/* If the stack is free return without printing anything*/
 	if (head == NULL)
 	{
 		return;
 	}
 
-	/* Print the values of all elements in the stack*/
+	/* Print values of all elements in the stack*/
 	for ( ; head != NULL; head = head->next)
 		printf("%d\n", head->n);
 }
 
 
 /**
- * pint_self - Q1 opcode that prints the value at the top of the
- * stack, followed by a new line
- * @list_head: head of linked list stack
- * @lineNumber: track of the current position of input being read
+ * pint_self - Q1 opcode that will print the value at the top of
+ * stack, followed by new line
+ * @list_head: head of the linked list stack
+ * @lineNumber: track of current position of input being read
  *
- * Return: nil
+ * Return: Nill
  */
 void pint_self(stack_t **list_head, unsigned int lineNumber)
 {
@@ -103,17 +103,17 @@ void pint_self(stack_t **list_head, unsigned int lineNumber)
 		exit(EXIT_FAILURE);
 	}
 
-	/* Print the value of the top element in the stack*/
+	/* Print value of the top element in the stack*/
 	printf("%d\n", (*list_head)->n);
 }
 
 
 /**
- * pop_self - Q2 opcode that removes the top element of the stack
- * @list_head: head of linked list stack
- * @lineNumber: track of the current position of input being read
+ * pop_self - Q2 opcode that will remove top element of the stack
+ * @list_head: head of our linked list stack
+ * @lineNumber: track of the current position of input to be read
  *
- * Return: nil
+ * Return: Nill
  */
 void pop_self(stack_t **list_head, unsigned int lineNumber)
 {
@@ -128,7 +128,7 @@ void pop_self(stack_t **list_head, unsigned int lineNumber)
 		exit(EXIT_FAILURE);
 	}
 
-	/* Reset the head pointer to the current stack head*/
+	/* Reset head pointer to the current stack head*/
 	head = *list_head;
 
 	/* Move the list_head pointer to the next element in the stack*/
