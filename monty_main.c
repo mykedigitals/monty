@@ -1,55 +1,51 @@
 #include "monty.h"
-#include <stdlib.h>
 #include <stdio.h>
 #define _GNU_SOURCE
+#include <stdlib.h>
 
-ExecutionContext executionContext = {NULL, NULL, NULL, 0};
+bus_t bus = {NULL, NULL, NULL, 0};
 
 /**
- * main - process instructions from a file in the Monty programming language
- * @arg_c: counts arguments passed to the program
- * @arg_v: access command-line arguments passed to the program
- * desc: reads a file, line by line, and passes each line to the
- * info_process function for further processing. It also
- * performs error handling and memory management
- *
- * Return: 0 (success)
- */
-
-int main(int arg_c, char *arg_v[])
+* main - function for monty code interpreter
+* @argc: argument count
+* @argv: argument value
+*
+* Return: 0 on success
+*/
+int main(int argc, char *argv[])
 {
-	char *instructionString;
-	FILE *input_file;
-	size_t newSize = 0;
-	ssize_t newReadLine = 1;
-	stack_t *newStack = NULL;
-	unsigned int idx = 0;
+	char *content;
+	FILE *file;
+	size_t size = 0;
+	ssize_t read_line = 1;
+	stack_t *stack = NULL;
+	unsigned int counter = 0;
 
-	if (arg_c != 2)
+	if (argc != 2)
 	{
 		fprintf(stderr, "USAGE: monty file\n");
 		exit(EXIT_FAILURE);
 	}
-	input_file = fopen(arg_v[1], "r");
-
-	executionContext.input_file = input_file;
-	if (!input_file)
+	file = fopen(argv[1], "r");
+	bus.file = file;
+	if (!file)
 	{
-		fprintf(stderr, "Error: Can't open file %s\n", arg_v[1]);
+		fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
 		exit(EXIT_FAILURE);
 	}
-	while (newReadLine > 0)
+	while (read_line > 0)
 	{
-		instructionString = NULL;
-		newReadLine = getline(&instructionString, &newSize, input_file);
-		executionContext.instructionString = instructionString;
-		idx++;
-		if (newReadLine > 0)
-			info_process(&newStack, idx, instructionString, input_file);
-
-		free(instructionString);
+		content = NULL;
+		read_line = getline(&content, &size, file);
+		bus.content = content;
+		counter++;
+		if (read_line > 0)
+		{
+			execute(content, &stack, counter, file);
+		}
+		free(content);
 	}
-	stack_empty(newStack);
-	fclose(input_file);
-	return (0);
+	free_stack(stack);
+	fclose(file);
+return (0);
 }
