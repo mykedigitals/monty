@@ -1,180 +1,184 @@
 #include "monty.h"
 
-/**
-* f_add - function that adds the top two elements of the stack
-* @head: double pointer head to the stack
-* @counter: line count
-*
-* Return: nothing
-*/
-void f_add(stack_t **head, unsigned int counter)
-{
-	stack_t *h;
-	int length = 0, temp;
 
-	h = *head;
-	while (h)
+/**
+ * plus_self - Q4 opcode that adds the top two elements of the stack
+ * @list_head: head of linked list stack
+ * @lineNumber: track of the current position of input being read
+ *
+ * Return: nil
+ */
+void plus_self(stack_t **list_head, unsigned int lineNumber)
+{
+	stack_t *head;
+	int tem_val;
+	int size;
+
+	head = *list_head;
+
+	/* Calculate the size of the stack by traversing it*/
+	for (size = 0; head != NULL ; size++)
+		head = head->next;
+
+	if (size < 2)
 	{
-		h = h->next;
-		length++;
-	}
-	if (length < 2)
-	{
-		fprintf(stderr, "L%d: can't add, stack too short\n", counter);
-		fclose(bus.file);
-		free(bus.content);
-		free_stack(*head);
+		fprintf(stderr, "L%d: can't add, stack too short\n", lineNumber);
+		fclose(executionContext.input_file);
+		free(executionContext.instructionString);
+		stack_empty(*list_head);
 		exit(EXIT_FAILURE);
 	}
-	h = *head;
-	temp = h->n + h->next->n;
-	h->next->n = temp;
-	*head = h->next;
-	free(h);
+
+	/* Reset the head pointer to the current stack head*/
+	head = *list_head;
+	/* Compute the sum of the top two elements in the stack*/
+	tem_val = head->n + head->next->n;
+	/* Update the value of the second element with the sum*/
+	head->next->n = tem_val;
+	/* Move the list_head pointer to the next element in the stack*/
+	*list_head = head->next;
+	free(head);
 }
 
-/**
-* f_sub - function that substracts nodes
-* @head: double head pointer to the stack
-* @counter: line count
-*
-* Return: nothing
-*/
-void f_sub(stack_t **head, unsigned int counter)
-{
-	stack_t *temp;
-	int sub, nd;
 
-	temp = *head;
-	for (nd = 0; temp != NULL; nd++)
-		temp = temp->next;
-	if (nd < 2)
-	{
-		fprintf(stderr, "L%d: can't sub, stack too short\n", counter);
-		fclose(bus.file);
-		free(bus.content);
-		free_stack(*head);
-		exit(EXIT_FAILURE);
-	}
-	temp = *head;
-	sub = temp->next->n - temp->n;
-	temp->next->n = sub;
-	*head = temp->next;
-	free(temp);
+/**
+ * noppe_self - Q5 opcode that doesn’t do anything
+ * @list_head: head of linked list stack
+ * @lineNumber: track of the current position of input being read
+ *
+ * Return: nil
+ */
+void noppe_self(stack_t **list_head, unsigned int lineNumber)
+{
+	/* The lineNumber parameter is not used in this function,*/
+	/* so the (void) cast is used to suppress compiler warnings*/
+	/* about an unused variable*/
+	(void) lineNumber;
+	(void) list_head;
 }
 
-/**
-* f_mul - function that multiplies the top two elements of the stack
-* @head: double head pointer to the stack
-* @counter: line count
-*
-* Return: nothing
-*/
-void f_mul(stack_t **head, unsigned int counter)
-{
-	stack_t *h;
-	int length = 0, temp;
 
-	h = *head;
-	while (h)
+/**
+ * counter_self - Q6 opcode that subtracts the top element of the stack
+ * from the second top element of the stack
+ * @list_head: head of linked list stack
+ * @lineNumber: track of the current position of input being read
+ *
+ * Return: nil
+ */
+void counter_self(stack_t **list_head, unsigned int lineNumber)
+{
+	stack_t *tem_val;
+	int size = 0;
+	int difference;
+
+	tem_val = *list_head;
+
+	/* Calculate the size of the stack by traversing it*/
+	while (tem_val)
 	{
-		h = h->next;
-		length++;
+		tem_val = tem_val->next;
+		size++;
 	}
-	if (length < 2)
+	if (size < 2)
 	{
-		fprintf(stderr, "L%d: can't mul, stack too short\n", counter);
-		fclose(bus.file);
-		free(bus.content);
-		free_stack(*head);
+		fprintf(stderr, "L%d: can't sub, stack too short\n", lineNumber);
+		fclose(executionContext.input_file);
+		free(executionContext.instructionString);
+		stack_empty(*list_head);
 		exit(EXIT_FAILURE);
 	}
-	h = *head;
-	temp = h->next->n * h->n;
-	h->next->n = temp;
-	*head = h->next;
-	free(h);
+	tem_val = *list_head;
+	/* Compute the difference of the second and first elements in the stack*/
+	difference = tem_val->next->n - tem_val->n;
+	/* Update the value of the second element with the difference*/
+	tem_val->next->n = difference;
+	/* Move the list_head pointer to the next element in the stack*/
+	*list_head = tem_val->next;
+	free(tem_val);
 }
 
-/**
-* f_div - function that divides the top two elements of the stack
-* @head: double head pointer to the stack
-* @counter: line count
-*
-* Return: nothing
-*/
-void f_div(stack_t **head, unsigned int counter)
-{
-	stack_t *h;
-	int length = 0, temp;
 
-	h = *head;
-	while (h)
+/**
+ * demar_self - Q7 opcode that divides the second top element of the
+ * stack by the top element of the stack
+ * @list_head: head of linked list stack
+ * @lineNumber: track of the current position of input being read
+ *
+ * Return: nil
+ */
+void demar_self(stack_t **list_head, unsigned int lineNumber)
+{
+	stack_t *head;
+	int tem_val;
+	int size;
+
+	head = *list_head;
+	/* Calculate the size of the stack by traversing it*/
+	for (size = 0; head != NULL ; size++)
+		head = head->next;
+
+	if (size < 2)
 	{
-		h = h->next;
-		length++;
-	}
-	if (length < 2)
-	{
-		fprintf(stderr, "L%d: can't div, stack too short\n", counter);
-		fclose(bus.file);
-		free(bus.content);
-		free_stack(*head);
+		fprintf(stderr, "L%d: can't div, stack too short\n", lineNumber);
+		fclose(executionContext.input_file);
+		free(executionContext.instructionString);
+		stack_empty(*list_head);
 		exit(EXIT_FAILURE);
 	}
-	h = *head;
-	if (h->n == 0)
+	head = *list_head;
+	if (head->n == 0)
 	{
-		fprintf(stderr, "L%d: division by zero\n", counter);
-		fclose(bus.file);
-		free(bus.content);
-		free_stack(*head);
+		fprintf(stderr, "L%d: division by zero\n", lineNumber);
+		fclose(executionContext.input_file);
+		free(executionContext.instructionString);
+		stack_empty(*list_head);
 		exit(EXIT_FAILURE);
 	}
-	temp = h->next->n / h->n;
-	h->next->n = temp;
-	*head = h->next;
-	free(h);
+	/* Compute the division of the top two elements in the stack*/
+	tem_val = head->next->n / head->n;
+	/* Update the value of the second element with the division*/
+	head->next->n = tem_val;
+	/* Move the list_head pointer to the next element in the stack*/
+	*list_head = head->next;
+	free(head);
 }
 
-/**
-* f_mod - function that computes the remainder of the division of the second
-* top element of the stack by the top element of the stack
-* @head: double head pointer to the stack
-* @counter: line count
-*
-* Return: nothing
-*/
-void f_mod(stack_t **head, unsigned int counter)
-{
-	stack_t *h;
-	int length = 0, temp;
 
-	h = *head;
-	while (h)
+/**
+ * mul_self - Q8 opcode that multiplies the second top element of the
+ * stack with the top element of the stack
+ * @list_head: head of linked list stack
+ * @lineNumber: track of the current position of input being read
+ *
+ * Return: nil
+ */
+void mul_self(stack_t **list_head, unsigned int lineNumber)
+{
+	stack_t *head;
+	int tem_val;
+	int size;
+
+	head = *list_head;
+
+	/* Calculate the size of the stack by traversing it*/
+	for (size = 0; head != NULL ; size++)
+		head = head->next;
+
+	if (size < 2)
 	{
-		h = h->next;
-		length++;
-	}
-	if (length < 2)
-	{
-		fprintf(stderr, "L%d: can't mod, stack too short\n", counter);
-		fclose(bus.file);
-		free(bus.content);
-		free_stack(*head);
+		fprintf(stderr, "L%d: can't mul, stack too short\n", lineNumber);
+		fclose(executionContext.input_file);
+		free(executionContext.instructionString);
+		stack_empty(*list_head);
 		exit(EXIT_FAILURE);
 	}
-	h = *head;
-	if (h->n == 0)
-	{
-		fprintf(stderr, "L%d: division by zero\n", counter);
-		fclose(bus.file);
-		free(bus.content);
-		free_stack(*head);
-		exit(EXIT_FAILURE);
-	}
-	temp = h->next->n % h->n;
-	h->next->n = temp;
-	*head = h->next;
-	free(h);
+	head = *list_head;
+	/* Compute the multiplication of the top two elements in the stack*/
+	tem_val = head->next->n * head->n;
+	/* Update the value of the second element with the multiplication*/
+	head->next->n = tem_val;
+	/* Move the list_head pointer to the next element in the stack*/
+	*list_head = head->next;
+	free(head);
 }

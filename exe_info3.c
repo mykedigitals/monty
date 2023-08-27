@@ -1,58 +1,43 @@
 #include "monty.h"
 
-/**
-* f_pop - function that prints the top of the stack
-* @head: double head pointer to the stack
-* @counter: line count
-*
-* Return: nothing
-*/
-void f_pop(stack_t **head, unsigned int counter)
-{
-	stack_t *h;
 
-	if (*head == NULL)
-	{
-		fprintf(stderr, "L%d: can't pop an empty stack\n", counter);
-		fclose(bus.file);
-		free(bus.content);
-		free_stack(*head);
-		exit(EXIT_FAILURE);
-	}
-	h = *head;
-	*head = h->next;
-	free(h);
+/**
+ * selfmade_stack - Q15a function that prints the top
+ * @list_head: head of linked list stack
+ * @lineNumber: track of the current position of input being read
+ *
+ * Return: nil
+ */
+void selfmade_stack(stack_t **list_head, unsigned int lineNumber)
+{
+	/* The lineNumber parameter is not used in this function,*/
+	/* so the (void) cast is used to suppress compiler warnings*/
+	/* about an unused variable*/
+	(void)list_head;
+	(void)lineNumber;
+
+	/* Set the executionContext.stackMode variable to 0,*/
+	/*indicating stack operation*/
+	executionContext.stackMode = 0;
 }
 
-/**
-* f_pint - function that prints the top of the stack
-* @head: double head pointer to the stack
-* @counter: line count
-*
-* Return: nothing
-*/
-void f_pint(stack_t **head, unsigned int counter)
-{
-	if (*head == NULL)
-	{
-		fprintf(stderr, "L%u: can't pint, stack empty\n", counter);
-		fclose(bus.file);
-		free(bus.content);
-		free_stack(*head);
-		exit(EXIT_FAILURE);
-	}
-	printf("%d\n", (*head)->n);
-}
 
 /**
-* f_nop - function that does nothing
-* @head: double head pointer to the stack
-* @counter: line count
-*
-* Return: nothing
-*/
-void f_nop(stack_t **head, unsigned int counter)
+ * selfmade_queue - Q15b opcode that sets format of data to a queue (FIFO)
+ * @list_head: head of linked list stack
+ * @lineNumber: track of the current position of input being read
+ *
+ * Return: nil
+ */
+void selfmade_queue(stack_t **list_head, unsigned int lineNumber)
 {
-	(void) counter;
-	(void) head;
+
+	/* The lineNumber parameter is not used in this function,*/
+	/* so the (void) cast is used to suppress compiler warnings*/
+	/* about an unused variable*/
+	(void)list_head;
+	(void)lineNumber;
+
+	/* Set the executionContext.stackMode to indicate queue mode*/
+	executionContext.stackMode = 1;
 }
